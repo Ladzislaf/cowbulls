@@ -1,34 +1,38 @@
 class CowBullsGame {
 	constructor() {
-		this.secretWord = '';
-		this.tryCounter = 0;
+		this.activeGames = {};
 	}
-	startGame(secretLength) {
-		this.secretWord = generateNewSecret(secretLength);
+	startGame(userId, secretLength) {
+		this.activeGames[userId] = {
+			secretWord: generateNewSecret(secretLength),
+			tryCounter: 0,
+		};
 	}
-	guessSecret(guessWord) {
-		if (guessWord === this.secretWord) {
-			return this.tryCounter++;
+	guessSecret(userId, guessWord) {
+		if (guessWord === this.activeGames[userId].secretWord) {
+			const tryCount = ++this.activeGames[userId].tryCounter;
+			delete this.activeGames[userId];
+			return tryCount;
 		} else {
-			if (!this.secretWord) {
+			if (!this.activeGames[userId].secretWord) {
 				console.log('CowBullsGame error: secret word is missing.');
 			}
-			this.tryCounter++;
+			this.activeGames[userId].tryCounter++;
 			return false;
 		}
 	}
-	calculateBullsCows(guessWord) {
+	calculateBullsCows(userId, guessWord) {
 		let bullsCount = 0,
 			cowsCount = 0;
-		for (let i = 0; i < this.secretWord.length; i++) {
-			if (this.secretWord.indexOf(guessWord[i]) !== -1) {
-				this.secretWord[i] === guessWord[i] ? bullsCount++ : cowsCount++;
+		for (let i = 0; i < this.activeGames[userId].secretWord.length; i++) {
+			if (this.activeGames[userId].secretWord.indexOf(guessWord[i]) !== -1) {
+				this.activeGames[userId].secretWord[i] === guessWord[i] ? bullsCount++ : cowsCount++;
 			}
 		}
 		return { bulls: bullsCount, cows: cowsCount };
 	}
-	getGameModeRegex() {
-		return this.gameModes;
+	leaveGame(userId) {
+		return delete this.activeGames[userId];
 	}
 }
 
