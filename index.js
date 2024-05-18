@@ -56,6 +56,6 @@ async function playAction(ctx, gameMode) {
 	return ctx.answerCbQuery(gameMode);
 }
 
-bot.launch();
+bot.launch(() => console.log('CowBulls bot is running.'))
 process.once('SIGINT', () => bot.stop('SIGINT'));
 process.once('SIGTERM', () => bot.stop('SIGTERM'));
