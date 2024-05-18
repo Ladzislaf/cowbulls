@@ -1,10 +1,8 @@
 import { Telegraf, Markup, session, Scenes } from 'telegraf';
 import dotenv from 'dotenv';
-import server from './server.js';
 import gameScene from './gameScene.js';
 
 dotenv.config();
-server.start();
 
 const bot = new Telegraf(process.env.BOT_TOKEN);
 const stage = new Scenes.Stage([gameScene]);
