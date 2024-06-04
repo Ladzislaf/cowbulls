@@ -17,7 +17,9 @@ bot.telegram.setMyCommands([
 ]);
 
 bot.start(async (ctx) => {
-	console.log(`User ${ctx.from.id}. [START]`);
+	console.log('[Start] first name:', ctx.from.first_name);
+	console.log('[Start] last name:', ctx.from.last_name);
+	console.log('[Start] username:', ctx.from.username);
 	await ctx.deleteMessage();
 	return ctx.reply('Команда /play - начать игру.');
 });
