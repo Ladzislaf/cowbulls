@@ -67,14 +67,14 @@ async function playAction(ctx, gameMode) {
 	return ctx.answerCbQuery(gameMode);
 }
 
-if (process.env.LOCAL_MODE === 'on') {
+if (process.env.ENV === 'local') {
 	bot.launch(() => console.log('CowBulls bot is running locally.'));
 } else {
 	bot.launch(
 		{
 			webhook: {
-				domain: process.env.DOMAIN,
-				port: process.env.PORT || 443,
+				domain: process.env.WEBHOOK_DOMAIN,
+				port: process.env.WEBHOOK_PORT || 443,
 			},
 		},
 		() => console.log('CowBulls bot is running on webhook.')
