@@ -16,6 +16,11 @@ bot.telegram.setMyCommands([
 	{ command: '/exit', description: 'Выйти из игры' },
 ]);
 
+bot.catch((err, ctx) => {
+	console.error(`User ${ctx.from.username} (${ctx.from.id}) error:`, err.message);
+	ctx.reply('Произошла ошибка. Попробуйте перезапустить бота.');
+});
+
 bot.start(async (ctx) => {
 	console.log('[Start] first name:', ctx.from.first_name);
 	console.log('[Start] last name:', ctx.from.last_name);
